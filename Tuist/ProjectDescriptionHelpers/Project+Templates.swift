@@ -45,7 +45,7 @@ extension Project {
 
   public static func framework(
     name: String,
-    targets: [DynamicFrameworkTarget] = [],
+    targetTypes: [DynamicFrameworkTargetType] = [],
     dependencies: [TargetDependency] = [],
     packages: [Package] = [],
     additionalFiles: [FileElement] = []
@@ -65,7 +65,7 @@ extension Project {
     )
     projectTargets.append(mainTarget)
 
-    if targets.contains(.unitTest) {
+    if targetTypes.contains(.unitTest) {
       let unitTestTarget = Target(
         name: "\(name)Tests",
         platform: .iOS,
@@ -82,7 +82,7 @@ extension Project {
       projectTargets.append(unitTestTarget)
     }
 
-    if targets.contains(.preview) {
+    if targetTypes.contains(.preview) {
       let previewAppTarget = Target(
         name: "\(name)PreviewApp",
         platform: .iOS,
@@ -135,10 +135,11 @@ extension Project {
 
   public static func staticLibrary(
     name: String,
-    targets: [StaticLibraryTarget] = [],
+    targetTypes: [StaticLibraryTargetType] = [],
     dependencies: [TargetDependency] = [],
     packages: [Package] = []
   ) -> Project {
+    var projectTargets: [Target] = []
     let mainTarget = Target(
       name: name,
       platform: .iOS,
@@ -150,21 +151,26 @@ extension Project {
       scripts: [.moduleSwiftLint],
       dependencies: dependencies
     )
-    let testTarget = Target(
-      name: "\(name)Tests",
-      platform: .iOS,
-      product: .unitTests,
-      bundleId: "\(bundleIdPrefix).\(name)Tests",
-      deploymentTarget: deploymentTarget,
-      infoPlist: .default,
-      sources: ["Tests/Sources/**", "Tests/Resources/**"],
-      dependencies: [.target(name: name)]
-    )
+    projectTargets.append(mainTarget)
+
+    if targetTypes.contains(.unitTest) {
+      let testTarget = Target(
+        name: "\(name)Tests",
+        platform: .iOS,
+        product: .unitTests,
+        bundleId: "\(bundleIdPrefix).\(name)Tests",
+        deploymentTarget: deploymentTarget,
+        infoPlist: .default,
+        sources: ["Tests/Sources/**", "Tests/Resources/**"],
+        dependencies: [.target(name: name)]
+      )
+      projectTargets.append(testTarget)
+    }
     return Project(
       name: name,
       options: .options(disableSynthesizedResourceAccessors: true),
       packages: packages,
-      targets: [mainTarget, testTarget]
+      targets: projectTargets
     )
   }
 }

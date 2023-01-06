@@ -7,11 +7,11 @@
 
 import ProjectDescription
 
-public enum DynamicFrameworkTarget {
+public enum DynamicFrameworkTargetType {
   case unitTest
   case preview
 }
 
-public enum StaticLibraryTarget {
+public enum StaticLibraryTargetType {
   case unitTest
 }
