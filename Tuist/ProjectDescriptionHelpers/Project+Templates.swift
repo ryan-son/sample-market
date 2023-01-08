@@ -236,10 +236,10 @@ extension TargetScript.Script {
 
   export PATH
 
-  if which swiftlint >/dev/null; then
+  if which swiftgen >/dev/null; then
     swiftgen run xcassets "${SRCROOT}/Resources/Colors.xcassets" "${SRCROOT}/Resources/Images.xcassets" -p "${SRCROOT}/Templates/Assets.stencil" -o "${SRCROOT}/Sources/Assets+Generated.swift"
   else
-    echo "wanring: SwiftGen is not installed.
+    echo "warning: SwiftGen is not installed.
   fi
   """
 }
