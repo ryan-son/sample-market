@@ -236,8 +236,10 @@ extension TargetScript.Script {
 
   export PATH
 
-  swiftgen run xcassets "${SRCROOT}/Resources/Colors.xcassets" "${SRCROOT}/Resources/Images.xcassets" -p "${SRCROOT}/Templates/Assets.stencil" --param publicAccess -o "${SRCROOT}/Sources/Assets+Derived.swift"
-
-  swiftgen run fonts "${SRCROOT}/Resources" -p "${SRCROOT}/Templates/Fonts.stencil" --param publicAccess -o "${SRCROOT}/Sources/Fonts+Derived.swift"
+  if which swiftlint >/dev/null; then
+    swiftgen run xcassets "${SRCROOT}/Resources/Colors.xcassets" "${SRCROOT}/Resources/Images.xcassets" -p "${SRCROOT}/Templates/Assets.stencil" -o "${SRCROOT}/Sources/Assets+Generated.swift"
+  else
+    echo "wanring: SwiftGen is not installed.
+  fi
   """
 }
