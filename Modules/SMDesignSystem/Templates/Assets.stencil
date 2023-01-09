@@ -9,21 +9,21 @@ import SwiftUI
 {% macro casesBlock assets %}
   {% for asset in assets %}
   {% if asset.items and asset.isNamespaced == "true" %}
-  
+
   public enum {{asset.name|swiftIdentifier:"pretty"|escapeReservedKeywords}} {
     {% filter indent:2 %}{% call casesBlock asset.items %}{% endfilter %}
   }
   {% elif asset.items %}
   {% call casesBlock asset.items %}
   {% elif asset.type == "color" %}
-  static let {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}} = Color("{{asset.value}}", bundle: .module)
+  static let {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}} = Color("{{asset.value}}", bundle: .main)
   {% elif asset.type == "image" %}
-  public static let {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}} = Image("{{asset.value}}", bundle: .module)
+  public static let {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}} = Image("{{asset.value}}", bundle: .main)
   {% endif %}
   {% endfor %}
 {% endmacro %}
 
-/// Cases to reference for safely initializing colors, like so: `Clr.Fill.primary`
+/// Cases to reference for safely initializing colors, like so: `Color.primary`
 public extension Color {
   {% for catalog in catalogs %}
   {% if catalog.name == "Colors" %}
@@ -32,7 +32,7 @@ public extension Color {
   {% endfor %}
 }
 
-/// Cases to reference for safely initializing images, like so: `Img.Onboarding.header`
+/// Cases to reference for safely initializing images, like so: `Image.Onboarding.header`
 extension Image {
   {% for catalog in catalogs %}
   {% if catalog.name == "Images" %}
