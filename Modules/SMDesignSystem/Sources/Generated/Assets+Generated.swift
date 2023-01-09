@@ -6,12 +6,12 @@
 import class Foundation.Bundle
 import SwiftUI
 
-/// Cases to reference for safely initializing colors, like so: `Clr.Fill.primary`
+/// Cases to reference for safely initializing colors, like so: `Color.primary`
 public extension Color {
-  static let accent = Color("Accent", bundle: .module)
+  static let accent = Color("Accent", bundle: .main)
 }
 
-/// Cases to reference for safely initializing images, like so: `Img.Onboarding.header`
+/// Cases to reference for safely initializing images, like so: `Image.Onboarding.header`
 extension Image {
 }
 // swiftlint:enable all
