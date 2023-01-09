@@ -17,8 +17,7 @@ let localHelper = LocalHelper(name: "MyPlugin")
 let workspace = Workspace(
   name: "SampleMarket",
   projects: [
-    "App",
-    "Modules/CoreLibraries",
+    "Modules/App",
     "Modules/SMDesignSystem",
   ],
   additionalFiles: []

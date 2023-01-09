@@ -4,7 +4,7 @@ import ProjectDescriptionHelpers
 let project: Project = .app(
   name: "App",
   dependencies: [
-    .project(target: "SMDesignSystem", path: .relativeToRoot("Modules/ResourcePackage"))
+    .project(target: "SMDesignSystem", path: .relativeToRoot("Modules/SMDesignSystem"))
   ],
   additionalFiles: [
     ".swiftlint.yml"
