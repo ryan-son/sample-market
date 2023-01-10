@@ -8,10 +8,8 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project: Project = .staticLibrary(
-  name: "MarketHomeCore",
+let project: Project = .framework(
+  name: "APIClient",
   targetTypes: [.unitTest],
-  dependencies: [
-    .project(target: "CoreLibraries", path: .relativeToRoot("Modules/CoreLibraries")),
-  ]
+  dependencies: []
 )

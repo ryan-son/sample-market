@@ -17,6 +17,7 @@ let localHelper = LocalHelper(name: "MyPlugin")
 let workspace = Workspace(
   name: "SampleMarket",
   projects: [
+    "Modules/APIClient",
     "Modules/App",
     "Modules/CoreLibraries",
     "Modules/MarketHome",
