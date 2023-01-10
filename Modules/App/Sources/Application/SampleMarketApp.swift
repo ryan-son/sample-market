@@ -4,7 +4,8 @@ import SwiftUI
 struct SampleMarketApp: App {
   var body: some Scene {
     WindowGroup {
-      EmptyView()
+      Rectangle()
+        .background(Color.white)
     }
   }
 }

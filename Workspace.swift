@@ -18,6 +18,9 @@ let workspace = Workspace(
   name: "SampleMarket",
   projects: [
     "Modules/App",
+    "Modules/CoreLibraries",
+    "Modules/MarketHome",
+    "Modules/MarketHomeCore",
     "Modules/SMDesignSystem",
   ],
   additionalFiles: []
