@@ -3,17 +3,47 @@ import Foundation
 public typealias APIResponse = (data: Data, urlResponse: URLResponse)
 
 public protocol APIClient {
+  func request(_ route: APIRoutable) async throws -> APIResponse
   func request<Decoded: Decodable>(
     _ route: APIRoutable,
     as decodedType: Decoded.Type
   ) async throws -> Decoded
 }
 
+public extension APIClient {
+  func request<Decoded: Decodable>(
+    _ route: APIRoutable,
+    as decodedType: Decoded.Type
+  ) async throws -> Decoded {
+    let (data, _) = try await request(route)
+
+    do {
+      return try decode(Decoded.self, from: data)
+    } catch {
+      throw error
+    }
+  }
+
+  func decode<Decoded: Decodable>(
+    with decoder: JSONDecoder = JSONDecoder(),
+    _ type: Decoded.Type,
+    from data: Data
+  ) throws -> Decoded {
+    do {
+      return try decoder.decode(Decoded.self, from: data)
+    } catch {
+      throw error
+    }
+  }
+}
+
 public final class APIClientLive: APIClient {
 
   private let session: URLSession
 
-  public init(session: URLSession) {
+  public init(
+    session: URLSession = URLSession(configuration: .default)
+  ) {
     self.session = session
   }
 
@@ -31,9 +61,7 @@ public final class APIClientLive: APIClient {
 
   private func printRequest(_ request: URLRequest) {
     print(
-      """
-      🟨 Request route: \(request.httpMethod ?? "") \(request.url!)
-      """
+      "🟨 Request route: \(request.httpMethod ?? "") \(request.url?.absoluteString ?? "")"
     )
   }
   private func printAPI(
@@ -42,36 +70,11 @@ public final class APIClientLive: APIClient {
   ) {
     print(
       """
-      ✅ Response route: \(request.httpMethod ?? "") \(request.url!), \
+      ✅ Response route: \(request.httpMethod ?? "") \(request.url?.absoluteString ?? ""), \
       status: \((response.urlResponse as? HTTPURLResponse)?.statusCode ?? 0), \
       receive data: \(response.data.asPrettyPrinted ?? ""))
       """
     )
-  }
-
-  public func request<Decoded: Decodable>(
-    _ route: APIRoutable,
-    as decodedType: Decoded.Type
-  ) async throws -> Decoded {
-    let (data, _) = try await request(route)
-
-    do {
-      return try decode(Decoded.self, from: data)
-    } catch {
-      throw error
-    }
-  }
-
-  private func decode<Decoded: Decodable>(
-    with decoder: JSONDecoder = JSONDecoder(),
-    _ type: Decoded.Type,
-    from data: Data
-  ) throws -> Decoded {
-    do {
-      return try decoder.decode(Decoded.self, from: data)
-    } catch {
-      throw error
-    }
   }
 }
 

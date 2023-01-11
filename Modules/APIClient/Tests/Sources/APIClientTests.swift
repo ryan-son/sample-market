@@ -4,7 +4,16 @@ import XCTest
 @testable import APIClient
 
 final class APIClientCoreTests: XCTestCase {
-    func test_example() {
-        XCTAssertEqual("APIClient", "APIClient")
-    }
+
+  private var sut: APIClient!
+
+  override func setUpWithError() throws {
+    try super.setUpWithError()
+    sut = APIClientLive(session: .shared)
+  }
+
+  override func tearDownWithError() throws {
+    sut = nil
+    try super.tearDownWithError()
+  }
 }
