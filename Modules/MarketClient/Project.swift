@@ -12,6 +12,7 @@ let project: Project = .framework(
   name: "MarketClient",
   targetTypes: [.unitTest],
   dependencies: [
-    .project(target: "APIClient", path: .relativeToRoot("Modules/APIClient"))
+    .project(target: "APIClient", path: .relativeToRoot("Modules/APIClient")),
+    .project(target: "SharedModels", path: .relativeToRoot("Modules/SharedModels"))
   ]
 )
