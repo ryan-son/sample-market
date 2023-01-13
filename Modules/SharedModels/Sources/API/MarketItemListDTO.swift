@@ -10,9 +10,9 @@ import Foundation
 public enum MarketItemListDTO {
 
   public struct Request {
-    let pageNumber: Int
-    let itemsPerPage: Int
-    let searchValue: String
+    public let pageNumber: Int
+    public let itemsPerPage: Int
+    public let searchValue: String?
   }
 
   public struct Response: Decodable {

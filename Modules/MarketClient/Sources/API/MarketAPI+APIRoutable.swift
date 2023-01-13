@@ -6,15 +6,27 @@
 //
 
 import APIClient
+import Foundation
+import SharedModels
 
-// enum MarketAPI: APIRoutable {
-//  var baseURL: URL {
-//    return URL(string: "https://openmarket.yagom-academy.kr")!
-//  }
-//
-//  var route: Route {
-//
-//  }
-//
-//  var headers: [String : String]?
-// }
+extension MarketAPI: APIRoutable {
+  var baseURL: URL {
+    return URL(string: "https://openmarket.yagom-academy.kr")!
+  }
+
+  var route: Route {
+    switch self {
+    case let .itemList(request):
+      var query = "page_no=\(request.pageNumber)&items_per_page=\(request.itemsPerPage)"
+
+      if let searchValue = request.searchValue {
+        query += "&search_value=\(searchValue)"
+      }
+      return .get("/api/products?\(query)")
+    }
+  }
+
+  var headers: [String: String]? {
+    return nil
+  }
+}
