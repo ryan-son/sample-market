@@ -17,7 +17,8 @@ extension MarketAPI: APIRoutable {
   var route: Route {
     switch self {
     case let .itemList(request):
-      var query = "page_no=\(request.pageNumber)&items_per_page=\(request.itemsPerPage)"
+      var query = "page_no=\(request.pageNumber)"
+      query += "&items_per_page=\(request.itemsPerPage)"
 
       if let searchValue = request.searchValue {
         query += "&search_value=\(searchValue)"
