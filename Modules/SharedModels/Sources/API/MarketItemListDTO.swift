@@ -17,7 +17,7 @@ public enum MarketItemListDTO {
     public init(
       pageNumber: Int,
       itemsPerPage: Int,
-      searchValue: String?
+      searchValue: String? = nil
     ) {
       self.pageNumber = pageNumber
       self.itemsPerPage = itemsPerPage
@@ -26,28 +26,28 @@ public enum MarketItemListDTO {
   }
 
   public struct Response: Decodable {
-    let pageNo: Int
-    let itemsPerPage: Int
-    let totalCount: Int
-    let offset: Int
-    let limit: Int
-    let lastPage: Int
-    let hasNext: Bool
-    let hasPrev: Bool
-    let pages: [MarketItemDTO.Response]
+    public let pageNo: Int
+    public let itemsPerPage: Int
+    public let totalCount: Int
+    public let offset: Int
+    public let limit: Int
+    public let lastPage: Int
+    public let hasNext: Bool
+    public let hasPrev: Bool
+    public let pages: [MarketItemDTO.Response]
   }
 }
 
 public struct MarketItemList {
-  let pageNumber: Int
-  let itemsPerPage: Int
-  let totalCount: Int
-  let offset: Int
-  let limit: Int
-  let isLastPage: Int
-  let hasNextPage: Bool
-  let hasPreviousPage: Bool
-  let items: [MarketItem]
+  public let pageNumber: Int
+  public let itemsPerPage: Int
+  public let totalCount: Int
+  public let offset: Int
+  public let limit: Int
+  public let lastPage: Int
+  public let hasNextPage: Bool
+  public let hasPreviousPage: Bool
+  public let items: [MarketItem]
 }
 
 extension MarketItemListDTO.Response {
@@ -58,7 +58,7 @@ extension MarketItemListDTO.Response {
       totalCount: totalCount,
       offset: offset,
       limit: limit,
-      isLastPage: lastPage,
+      lastPage: lastPage,
       hasNextPage: hasNext,
       hasPreviousPage: hasPrev,
       items: pages.map { $0.toDomain() }

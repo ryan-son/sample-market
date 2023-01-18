@@ -10,8 +10,8 @@ import Foundation
 import SharedModels
 
 extension MarketAPI: APIRoutable {
-  var baseURL: URL {
-    return URL(string: "https://openmarket.yagom-academy.kr")!
+  var baseURL: String {
+    return "https://openmarket.yagom-academy.kr"
   }
 
   var route: Route {
@@ -23,7 +23,20 @@ extension MarketAPI: APIRoutable {
       if let searchValue = request.searchValue {
         query += "&search_value=\(searchValue)"
       }
-      return .get("/api/products?\(query)")
+      return .get("/api/products")
+    }
+  }
+
+  var parameters: Parameters {
+    switch self {
+    case let .itemList(request):
+      return Parameters(
+        values: [
+          "page_no": request.pageNumber,
+          "items_per_page": request.itemsPerPage,
+          "search_value": request.searchValue as Any
+        ]
+      )
     }
   }
 

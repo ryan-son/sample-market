@@ -15,7 +15,7 @@ public struct MarketItem {
 
   let id: Int
   let vendorID: Int
-  let venderName: Int
+  let venderName: String
   let name: String
   let description: String
   let thumbnail: String
@@ -24,6 +24,6 @@ public struct MarketItem {
   let bargainPrice: Price
   let discountedPrice: Price
   let stock: Int
-  let createdDate: Date
-  let issuedDate: Date
+  let createdDate: Date?
+  let issuedDate: Date?
 }

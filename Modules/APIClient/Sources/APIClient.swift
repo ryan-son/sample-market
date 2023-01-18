@@ -32,6 +32,9 @@ public extension APIClient {
     do {
       return try decoder.decode(Decoded.self, from: data)
     } catch {
+      #if DEBUG
+      print(error)
+      #endif
       throw error
     }
   }
@@ -48,7 +51,7 @@ public final class APIClientLive: APIClient {
   }
 
   public func request(_ route: APIRoutable) async throws -> APIResponse {
-    let urlRequest = URLRequest(route: route)
+    let urlRequest = URLRequest(route: route)!
     #if DEBUG
     printRequest(urlRequest)
     #endif
@@ -78,9 +81,18 @@ public final class APIClientLive: APIClient {
   }
 }
 
+fileprivate extension URLComponents {
+  init?(route: APIRoutable) {
+    self.init(string: route.baseURL)
+    self.path = route.route.path
+    self.queryItems = route.parameters.toQueryItems()
+  }
+}
+
 fileprivate extension URLRequest {
-  init(route: APIRoutable) {
-    self.init(url: route.baseURL.appendingPathComponent(route.route.path))
+  init?(route: APIRoutable) {
+    guard let url = URLComponents(route: route)?.url else { return nil }
+    self.init(url: url)
     self.httpMethod = route.route.method.rawValue
     self.allHTTPHeaderFields = route.headers
   }

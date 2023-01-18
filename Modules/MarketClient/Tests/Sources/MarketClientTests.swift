@@ -1,5 +1,6 @@
 import Foundation
 import XCTest
+import SharedModels
 
 @testable import MarketClient
 
@@ -18,6 +19,9 @@ final class MarketClientCoreTests: XCTestCase {
   }
 
   func test_itemList() async throws {
-//    sut.
+    let request = MarketItemListDTO.Request(pageNumber: 1, itemsPerPage: 10)
+    let result = try await sut.itemList(request: request)
+    print(result)
+    XCTAssertTrue(!result.items.isEmpty)
   }
 }
