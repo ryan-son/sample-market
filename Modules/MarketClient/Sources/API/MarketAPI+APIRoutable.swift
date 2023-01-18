@@ -44,3 +44,29 @@ extension MarketAPI: APIRoutable {
     return nil
   }
 }
+
+#if DEBUG
+// MARK: - Sample Data
+extension MarketAPI {
+  var sampleData: Data {
+    switch self {
+    case .itemList:
+      return itemListSampleResponse()
+    }
+  }
+
+  private func itemListSampleResponse() -> Data {
+    let bundle = Bundle(for: MarketClientLive.self)
+    guard let url = bundle.url(forResource: "MarketItemListSampleResponse", withExtension: "json") else {
+      return Data()
+    }
+
+    do {
+      return try Data(contentsOf: url)
+    } catch {
+      print(error)
+      return Data()
+    }
+  }
+}
+#endif

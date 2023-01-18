@@ -1,3 +1,4 @@
+import APIClient
 import Foundation
 import XCTest
 import SharedModels
@@ -10,7 +11,7 @@ final class MarketClientCoreTests: XCTestCase {
 
   override func setUpWithError() throws {
     try super.setUpWithError()
-    sut = MarketClientLive()
+    sut = MarketClientLive(apiClient: APIClientMock())
   }
 
   override func tearDownWithError() throws {
@@ -19,9 +20,15 @@ final class MarketClientCoreTests: XCTestCase {
   }
 
   func test_itemList() async throws {
+    // Given
     let request = MarketItemListDTO.Request(pageNumber: 1, itemsPerPage: 10)
+
+    // When
     let result = try await sut.itemList(request: request)
-    print(result)
+
+    // Then
     XCTAssertTrue(!result.items.isEmpty)
+    XCTAssertEqual(result.pageNumber, request.pageNumber)
+    XCTAssertEqual(result.itemsPerPage, request.itemsPerPage)
   }
 }

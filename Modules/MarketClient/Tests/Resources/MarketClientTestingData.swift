@@ -1,7 +1,8 @@
-import MarketClient
 import Foundation
 import XCTest
 
-public struct MarketClientTestingData {
+@testable import MarketClient
+
+public class MarketClientTestingData {
     public init() {}
 }
