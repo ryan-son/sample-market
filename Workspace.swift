@@ -24,6 +24,7 @@ let workspace = Workspace(
     "Modules/MarketHome",
     "Modules/MarketHomeCore",
     "Modules/SMDesignSystem",
+    "Modules/SMFoundation",
     "Modules/SharedModels",
   ],
   additionalFiles: []
