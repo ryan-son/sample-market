@@ -1,7 +1,7 @@
 import APIClient
 import Foundation
-import XCTest
 import SharedModels
+import XCTest
 
 @testable import MarketClient
 
