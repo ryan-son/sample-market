@@ -12,6 +12,7 @@ let project: Project = .staticLibrary(
   name: "MarketHomeCore",
   targetTypes: [.unitTest],
   dependencies: [
-    .project(target: "CoreLibraries", path: .relativeToRoot("Modules/CoreLibraries")),
+    .project(target: "MarketClient", path: .relativeToRoot("Modules/MarketClient")),
+    .project(target: "SharedModels", path: .relativeToRoot("Modules/SharedModels"))
   ]
 )

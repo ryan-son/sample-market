@@ -9,19 +9,49 @@ import Foundation
 
 public enum MarketItemDTO {
   public struct Response: Decodable {
-    let id: Int
-    let vendorID: Int
-    let vendorName: String
-    let name: String
-    let description: String
-    let thumbnail: String
-    let currency: String
-    let price: Int
-    let bargainPrice: Int
-    let discountedPrice: Int
-    let stock: Int
-    let createdAt: String
-    let issuedAt: String
+    public let id: Int
+    public let vendorID: Int
+    public let vendorName: String
+    public let name: String
+    public let description: String
+    public let thumbnail: String
+    public let currency: String
+    public let price: Int
+    public let bargainPrice: Int
+    public let discountedPrice: Int
+    public let stock: Int
+    public let createdAt: String
+    public let issuedAt: String
+
+    public init(
+      id: Int,
+      vendorID: Int,
+      vendorName: String,
+      name: String,
+      description: String,
+      thumbnail: String,
+      currency: String,
+      price: Int,
+      bargainPrice: Int,
+      discountedPrice: Int,
+      stock: Int,
+      createdAt: String,
+      issuedAt: String
+    ) {
+      self.id = id
+      self.vendorID = vendorID
+      self.vendorName = vendorName
+      self.name = name
+      self.description = description
+      self.thumbnail = thumbnail
+      self.currency = currency
+      self.price = price
+      self.bargainPrice = bargainPrice
+      self.discountedPrice = discountedPrice
+      self.stock = stock
+      self.createdAt = createdAt
+      self.issuedAt = issuedAt
+    }
 
     enum CodingKeys: String, CodingKey {
       case id

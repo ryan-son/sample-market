@@ -35,6 +35,28 @@ public enum MarketItemListDTO {
     public let hasNext: Bool
     public let hasPrev: Bool
     public let pages: [MarketItemDTO.Response]
+
+    public init(
+      pageNo: Int,
+      itemsPerPage: Int,
+      totalCount: Int,
+      offset: Int,
+      limit: Int,
+      lastPage: Int,
+      hasNext: Bool,
+      hasPrev: Bool,
+      pages: [MarketItemDTO.Response]
+    ) {
+      self.pageNo = pageNo
+      self.itemsPerPage = itemsPerPage
+      self.totalCount = totalCount
+      self.offset = offset
+      self.limit = limit
+      self.lastPage = lastPage
+      self.hasNext = hasNext
+      self.hasPrev = hasPrev
+      self.pages = pages
+    }
   }
 }
 
