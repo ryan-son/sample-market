@@ -5,12 +5,12 @@
 //  Created by Geonhee on 2023/01/21.
 //
 
-protocol Occupiable {
+public protocol Occupiable {
   var isEmpty: Bool { get }
   var isNotEmpty: Bool { get }
 }
 
-extension Occupiable {
+public extension Occupiable {
   var isNotEmpty: Bool {
     return !isEmpty
   }

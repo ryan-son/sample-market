@@ -1,5 +1,6 @@
 import APIClient
 import Foundation
+import SMFoundation
 import SharedModels
 import XCTest
 
@@ -27,7 +28,7 @@ final class MarketClientCoreTests: XCTestCase {
     let result = try await sut.itemList(request: request)
 
     // Then
-    XCTAssertTrue(!result.items.isEmpty)
+    XCTAssertTrue(result.items.isNotEmpty)
     XCTAssertEqual(result.pageNumber, request.pageNumber)
     XCTAssertEqual(result.itemsPerPage, request.itemsPerPage)
   }

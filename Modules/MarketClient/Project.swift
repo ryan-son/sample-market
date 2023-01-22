@@ -13,6 +13,10 @@ let project: Project = .framework(
   targetTypes: [.unitTest],
   dependencies: [
     .project(target: "APIClient", path: .relativeToRoot("Modules/APIClient")),
+    .project(target: "SMFoundation", path: .relativeToRoot("Modules/SMFoundation")),
     .project(target: "SharedModels", path: .relativeToRoot("Modules/SharedModels"))
+  ],
+  additionalFiles: [
+    "Sources/MarketItemListSampleResponse.json"
   ]
 )
