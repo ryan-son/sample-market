@@ -10,20 +10,20 @@ import Foundation
 public struct MarketItem {
 
   public struct Price {
-    let value: Int
+    public let value: Int
   }
 
-  let id: Int
-  let vendorID: Int
-  let venderName: String
-  let name: String
-  let description: String
-  let thumbnail: String
-  let currency: Currency
-  let price: Price
-  let bargainPrice: Price
-  let discountedPrice: Price
-  let stock: Int
-  let createdDate: Date?
-  let issuedDate: Date?
+  public let id: Int
+  public let vendorID: Int
+  public let venderName: String
+  public let name: String
+  public let description: String
+  public let thumbnail: String
+  public let currency: Currency
+  public let price: Price
+  public let bargainPrice: Price
+  public let discountedPrice: Price
+  public let stock: Int
+  public let createdDate: Date?
+  public let issuedDate: Date?
 }
