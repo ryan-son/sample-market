@@ -2,16 +2,7 @@ import Foundation
 import MarketClient
 import SharedModels
 
-public protocol MarketHomeViewModel {
-  @discardableResult
-  func fetchItemList(
-    pageNumber: Int?,
-    itemsPerPage: Int,
-    searchValue: String?
-  ) async -> MarketItemList?
-}
-
-public final class MarketHomeViewModelLive: MarketHomeViewModel, ObservableObject {
+public final class MarketHomeViewModel: ObservableObject {
 
   enum Error: Swift.Error {
     case underlying(Swift.Error)
@@ -36,7 +27,7 @@ public final class MarketHomeViewModelLive: MarketHomeViewModel, ObservableObjec
   public func fetchItemList(
     pageNumber: Int? = nil,
     itemsPerPage: Int = 10,
-    searchValue: String?
+    searchValue: String? = nil
   ) async -> MarketItemList? {
     let request = MarketItemListDTO.Request(
       pageNumber: currentPageNumber + 1,

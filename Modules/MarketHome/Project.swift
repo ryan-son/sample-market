@@ -11,6 +11,6 @@ import ProjectDescriptionHelpers
 let project: Project = .framework(
   name: "MarketHome",
   dependencies: [
-    .project(target: "MarketHomeCore", path: .relativeToRoot("Modules/MarketHomeCore")),
+    .project(target: "MarketHomeCore", path: .relativeToRoot("Modules/MarketHomeCore"))
   ]
 )
