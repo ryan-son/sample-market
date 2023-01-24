@@ -20,6 +20,7 @@ let workspace = Workspace(
     "Modules/APIClient",
     "Modules/App",
     "Modules/CoreLibraries",
+    "Modules/ImageCacheStorage",
     "Modules/ImageClient",
     "Modules/MarketClient",
     "Modules/MarketHome",
