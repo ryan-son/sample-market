@@ -18,14 +18,23 @@ public final class APIClientLive: APIClient {
   }
 
   public func request(_ route: APIRoutable) async throws -> APIResponse {
-    let urlRequest = try URLRequest(route: route)
+    let request = try URLRequest(route: route)
+    return try await data(for: request)
+  }
 
+  public func request(url: URL) async throws -> APIResponse {
+    let request = URLRequest(url: url)
+    return try await data(for: request)
+
+  }
+
+  private func data(for request: URLRequest) async throws -> APIResponse {
     #if DEBUG
-    printRequest(urlRequest)
+    printRequest(request)
     #endif
-    let (data, response) = try await session.data(for: urlRequest)
+    let (data, response) = try await session.data(for: request)
     #if DEBUG
-    printAPI(request: urlRequest, response: (data, response))
+    printAPI(request: request, response: (data, response))
     #endif
     return (data, response)
   }

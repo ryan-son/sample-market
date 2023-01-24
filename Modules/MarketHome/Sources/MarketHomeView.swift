@@ -20,7 +20,7 @@ public struct MarketHomeView: View {
 private struct MarketHomeListCell: View {
 
   struct ViewState {
-    var thumbnailImage: URL?
+    var thumbnailURL: URL?
     var itemName: String
     var registeredDate: String
     var price: String
@@ -34,7 +34,7 @@ private struct MarketHomeListCell: View {
 extension MarketItem {
   private func toViewState() -> MarketHomeListCell.ViewState {
     return MarketHomeListCell.ViewState(
-      thumbnailImage: URL(string: thumbnail),
+      thumbnailURL: URL(string: thumbnail),
       itemName: name,
       registeredDate: "\(createdDate ?? Date())",
       price: "\(currency) \(price.value.formatted(.number))"

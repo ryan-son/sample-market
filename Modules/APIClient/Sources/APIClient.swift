@@ -4,18 +4,24 @@ public typealias APIResponse = (data: Data, urlResponse: URLResponse)
 
 public protocol APIClient {
   func request(_ route: APIRoutable) async throws -> APIResponse
-  func request<Decoded: Decodable>(
-    _ route: APIRoutable,
-    as decodedType: Decoded.Type
-  ) async throws -> Decoded
+  func request<Decoded: Decodable>(_ route: APIRoutable, as decodedType: Decoded.Type) async throws -> Decoded
+  func request(url: URL) async throws -> APIResponse
+  func request<Decoded: Decodable>(url: URL, as decodedType: Decoded.Type) async throws -> Decoded
 }
 
 public extension APIClient {
-  func request<Decoded: Decodable>(
-    _ route: APIRoutable,
-    as decodedType: Decoded.Type
-  ) async throws -> Decoded {
+  func request<Decoded: Decodable>(_ route: APIRoutable, as decodedType: Decoded.Type) async throws -> Decoded {
     let (data, _) = try await request(route)
+
+    do {
+      return try decode(Decoded.self, from: data)
+    } catch {
+      throw error
+    }
+  }
+
+  func request<Decoded: Decodable>(url: URL, as decodedType: Decoded.Type) async throws -> Decoded {
+    let (data, _) = try await request(url: url)
 
     do {
       return try decode(Decoded.self, from: data)
