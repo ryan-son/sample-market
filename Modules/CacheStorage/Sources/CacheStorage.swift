@@ -1,8 +1,8 @@
 //
 //  CacheStorage.swift
-//  ImageCacheStorage
+//  CacheStorage
 //
-//  Created by Geonhee on 2023/01/24.
+//  Created by Geonhee on 2023/01/25.
 //
 
 import Foundation

@@ -19,6 +19,7 @@ let workspace = Workspace(
   projects: [
     "Modules/APIClient",
     "Modules/App",
+    "Modules/CacheStorage",
     "Modules/CoreLibraries",
     "Modules/ImageCacheStorage",
     "Modules/ImageClient",

@@ -11,5 +11,8 @@ import ProjectDescriptionHelpers
 let project: Project = .framework(
   name: "ImageCacheStorage",
   targetTypes: [.unitTest],
-  dependencies: []
+  dependencies: [
+    .project(target: "APIClient", path: .relativeToRoot("Modules/APIClient")),
+    .project(target: "CacheStorage", path: .relativeToRoot("Modules/CacheStorage"))
+  ]
 )

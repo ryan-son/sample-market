@@ -1,6 +1,6 @@
 import APIClient
 import Foundation
 
-//final class ImageCacheStorage: CacheStorage {
+// final class ImageCacheStorage: CacheStorage {
 //
-//}
+// }
