@@ -1,5 +1,5 @@
 //
-//  LRUFileCache.swift
+//  LRUDiskCache.swift
 //  CacheStorage
 //
 //  Created by Geonhee on 2023/01/26.
@@ -7,19 +7,25 @@
 
 import Foundation
 
-final class LRUFileCache: LRUCache {
+public final class LRUDiskCache: LRUCache {
 
   private let fileManager: FileManager
+  private let userDefaults: UserDefaults
   private let cacheDirectory: URL
+  let maxSize: Int
   private var accessDates: [URL: Date]
 
   init(
     fileManager: FileManager = .default,
-    cacheDirectory: URL,
+    userDefaults: UserDefaults = .standard,
+    cacheDirectory: URL? = nil,
+    maxSize: Int,
     accessDates: [URL: Date] = [:]
   ) {
     self.fileManager = fileManager
-    self.cacheDirectory = cacheDirectory
+    self.userDefaults = userDefaults
+    self.cacheDirectory = cacheDirectory ?? fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first!
+    self.maxSize = maxSize
     self.accessDates = accessDates
   }
 

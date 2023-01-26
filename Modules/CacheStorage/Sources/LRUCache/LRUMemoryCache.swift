@@ -7,30 +7,34 @@
 
 import Foundation
 
-final class LRUMemoryCache<Key: AnyObject>: LRUCache {
+public final class LRUMemoryCache: LRUCache {
 
-  private let cache: NSCache<Key, NSData>
-  private let maximumSize: Int
+  private let cache: NSCache<NSString, NSData>
+  let maxSize: Int
+  var totalSize: Int {
+    return cache.countLimit
+  }
 
   init(
-    cache: NSCache<Key, NSData> = NSCache<Key, NSData>(),
-    maximumSize: Int
+    cache: NSCache<NSString, NSData> = NSCache<NSString, NSData>(),
+    maxSize: Int
   ) {
     self.cache = cache
-    self.maximumSize = maximumSize
+    self.cache.totalCostLimit = maxSize
+    self.maxSize = maxSize
   }
 
-  func store(_ data: Data, for key: Key) {
+  func store(_ data: Data, for key: String) {
     let nsData = data as NSData
-    cache.setObject(nsData, forKey: key, cost: nsData.length)
+    cache.setObject(nsData, forKey: key as NSString, cost: nsData.length)
   }
 
-  func retrieve(for key: Key) -> Data? {
-    return cache.object(forKey: key) as Data?
+  func retrieve(for key: String) -> Data? {
+    return cache.object(forKey: key as NSString) as Data?
   }
 
-  func remove(for key: Key) {
-    cache.removeObject(forKey: key)
+  func remove(for key: String) {
+    cache.removeObject(forKey: key as NSString)
   }
 
   func removeLeastRecentlyUsed() {
