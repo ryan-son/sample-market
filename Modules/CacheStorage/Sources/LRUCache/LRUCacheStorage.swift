@@ -20,12 +20,12 @@ public final class LRUCacheStorage: LRUCache {
     self.memoryCache = memoryCache
   }
 
-  func store(_ data: Data, for key: String) {
+  public func store(_ data: Data, for key: String) {
     memoryCache.store(data, for: key)
     diskCache.store(data, for: key)
   }
 
-  func retrieve(for key: String) -> Data? {
+  public func retrieve(for key: String) -> Data? {
     if let data = memoryCache.retrieve(for: key) {
       return data
     } else if let data = diskCache.retrieve(for: key) {
@@ -34,18 +34,18 @@ public final class LRUCacheStorage: LRUCache {
     return nil
   }
 
-  func remove(for key: String) {
+  public func remove(for key: String) {
     memoryCache.remove(for: key)
     diskCache.remove(for: key)
   }
 
-  func removeLeastRecentlyUsed() {
+  public func removeLeastRecentlyUsed() {
     // NSCache는 기본 정책이 LRU이므로 정의할 필요 없음
     // if diskCache totalSize > diskCache maxSize
     // diskCache.removeLeastRecentlyUsed()
   }
 
-  func removeAll() {
+  public func removeAll() {
     memoryCache.removeAll()
     diskCache.removeAll()
   }

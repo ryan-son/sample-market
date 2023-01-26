@@ -15,7 +15,7 @@ public final class LRUDiskCache: LRUCache {
   let maxSize: Int
   private var accessDates: [URL: Date]
 
-  init(
+  public init(
     fileManager: FileManager = .default,
     userDefaults: UserDefaults = .standard,
     cacheDirectory: URL? = nil,
@@ -29,32 +29,32 @@ public final class LRUDiskCache: LRUCache {
     self.accessDates = accessDates
   }
 
-  func store(_ data: Data, for key: String) {
+  public func store(_ data: Data, for key: String) {
     let fileURL = cacheDirectory.appendingPathComponent(key)
     try? data.write(to: fileURL)
     accessDates[fileURL] = Date()
   }
 
-  func retrieve(for key: String) -> Data? {
+  public func retrieve(for key: String) -> Data? {
     let fileURL = cacheDirectory.appendingPathComponent(key)
     accessDates[fileURL] = Date()
     return try? Data(contentsOf: fileURL)
   }
 
-  func remove(for key: String) {
+  public func remove(for key: String) {
     let fileURL = cacheDirectory.appendingPathComponent(key)
     try? fileManager.removeItem(at: fileURL)
     accessDates[fileURL] = nil
   }
 
-  func removeLeastRecentlyUsed() {
+  public func removeLeastRecentlyUsed() {
     let sortedFiles = accessDates.sorted { $0.value < $1.value }
     guard let leastRecentlyUsedFileURL = sortedFiles.first?.key else { return }
     try? fileManager.removeItem(at: leastRecentlyUsedFileURL)
     accessDates[leastRecentlyUsedFileURL] = nil
   }
 
-  func removeAll() {
+  public func removeAll() {
     try? fileManager.removeItem(at: cacheDirectory)
     try? fileManager.createDirectory(at: cacheDirectory, withIntermediateDirectories: true)
     accessDates.removeAll()

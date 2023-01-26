@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Cache {
+public protocol Cache {
   associatedtype Key
 
   func store(_ data: Data, for key: Key)
@@ -16,6 +16,6 @@ protocol Cache {
   func removeAll()
 }
 
-protocol LRUCache: Cache {
+public protocol LRUCache: Cache {
   func removeLeastRecentlyUsed()
 }

@@ -15,7 +15,7 @@ public final class LRUMemoryCache: LRUCache {
     return cache.countLimit
   }
 
-  init(
+  public init(
     cache: NSCache<NSString, NSData> = NSCache<NSString, NSData>(),
     maxSize: Int
   ) {
