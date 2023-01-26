@@ -7,12 +7,12 @@
 
 import Foundation
 
-public final class LRUMemoryCache<Key: AnyObject>: LRUCache {
+final class LRUMemoryCache<Key: AnyObject>: LRUCache {
 
   private let cache: NSCache<Key, NSData>
   private let maximumSize: Int
 
-  public init(
+  init(
     cache: NSCache<Key, NSData> = NSCache<Key, NSData>(),
     maximumSize: Int
   ) {
@@ -20,16 +20,16 @@ public final class LRUMemoryCache<Key: AnyObject>: LRUCache {
     self.maximumSize = maximumSize
   }
 
-  public func store(_ data: Data, for key: Key) {
+  func store(_ data: Data, for key: Key) {
     let nsData = data as NSData
     cache.setObject(nsData, forKey: key, cost: nsData.length)
   }
 
-  public func retrieve(for key: Key) -> Data? {
+  func retrieve(for key: Key) -> Data? {
     return cache.object(forKey: key) as Data?
   }
 
-  public func remove(for key: Key) {
+  func remove(for key: Key) {
     cache.removeObject(forKey: key)
   }
 
