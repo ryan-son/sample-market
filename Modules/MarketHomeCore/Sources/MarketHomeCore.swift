@@ -5,14 +5,15 @@ import SharedModels
 
 public final class MarketHomeViewModel: ObservableObject {
 
-  enum Error: Swift.Error {
+  public enum Error: Swift.Error {
     case underlying(Swift.Error)
   }
 
   private let marketClient: MarketClient
   private let imageClient: ImageClient
-  @Published private var marketItems: [MarketItem]
-  @Published private var error: Error?
+  @Published public var marketItems: [MarketItem]
+  @Published public var isLoading: Bool = true
+  @Published public var error: Error?
 
   private var currentPageNumber: Int
 
@@ -28,11 +29,15 @@ public final class MarketHomeViewModel: ObservableObject {
     self.currentPageNumber = currentPageNumber
   }
 
+  @discardableResult
+  @MainActor
   public func fetchItemList(
     pageNumber: Int? = nil,
     itemsPerPage: Int = 10,
     searchValue: String? = nil
   ) async -> MarketItemList? {
+    isLoading = true
+
     let request = MarketItemListDTO.Request(
       pageNumber: currentPageNumber + 1,
       itemsPerPage: 10,
@@ -41,8 +46,9 @@ public final class MarketHomeViewModel: ObservableObject {
 
     do {
       let fetchedItemList = try await marketClient.itemList(request: request)
+      isLoading = false
       currentPageNumber = fetchedItemList.pageNumber
-      marketItems = fetchedItemList.items
+      marketItems += fetchedItemList.items
       return fetchedItemList
     } catch {
       self.error = .underlying(error)
@@ -51,9 +57,10 @@ public final class MarketHomeViewModel: ObservableObject {
     }
   }
 
+  @MainActor
   public func fetchThumbnailImage(for urlString: String) async -> Data? {
     do {
-      return try imageClient.image(urlString: urlString)
+      return try await imageClient.image(urlString: urlString)
     } catch {
       self.error = .underlying(error)
       printIfDebug(error)

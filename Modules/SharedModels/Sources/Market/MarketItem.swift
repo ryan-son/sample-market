@@ -7,10 +7,10 @@
 
 import Foundation
 
-public struct MarketItem {
+public struct MarketItem: Identifiable, Equatable {
 
-  public struct Price {
-    public let value: Int
+  public struct Price: Equatable {
+    public let value: Double
   }
 
   public let id: Int

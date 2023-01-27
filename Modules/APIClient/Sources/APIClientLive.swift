@@ -25,18 +25,29 @@ public final class APIClientLive: APIClient {
   public func request(url: URL) async throws -> APIResponse {
     let request = URLRequest(url: url)
     return try await data(for: request)
-
   }
 
   private func data(for request: URLRequest) async throws -> APIResponse {
     #if DEBUG
     printRequest(request)
     #endif
-    let (data, response) = try await session.data(for: request)
-    #if DEBUG
-    printAPI(request: request, response: (data, response))
-    #endif
-    return (data, response)
+    let task = Task {
+      try Task.checkCancellation()
+      let (data, response) = try await session.data(for: request)
+      try Task.checkCancellation()
+      return (data, response)
+    }
+
+    do {
+      let response = try await task.value
+      #if DEBUG
+      printAPI(request: request, response: response)
+      #endif
+      return response
+    } catch {
+      print(error)
+      return APIResponse(Data(), URLResponse())
+    }
   }
 
   private func printRequest(_ request: URLRequest) {

@@ -16,9 +16,9 @@ public enum MarketItemDTO {
     public let description: String
     public let thumbnail: String
     public let currency: String
-    public let price: Int
-    public let bargainPrice: Int
-    public let discountedPrice: Int
+    public let price: Double
+    public let bargainPrice: Double
+    public let discountedPrice: Double
     public let stock: Int
     public let createdAt: String
     public let issuedAt: String
@@ -31,9 +31,9 @@ public enum MarketItemDTO {
       description: String,
       thumbnail: String,
       currency: String,
-      price: Int,
-      bargainPrice: Int,
-      discountedPrice: Int,
+      price: Double,
+      bargainPrice: Double,
+      discountedPrice: Double,
       stock: Int,
       createdAt: String,
       issuedAt: String

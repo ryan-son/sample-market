@@ -13,11 +13,30 @@ public struct MarketHomeView: View {
   }
 
   public var body: some View {
-    return EmptyView()
+    VStack {
+      List(viewModel.marketItems) { item in
+        MarketHomeListRow(viewModel: viewModel, viewState: item.toViewState())
+          .onAppear {
+            if item == viewModel.marketItems.last {
+              Task {
+                await viewModel.fetchItemList()
+              }
+            }
+          }
+
+      }
+      if viewModel.isLoading {
+        ProgressView()
+          .frame(idealWidth: .infinity, maxWidth: .infinity, alignment: .center)
+      }
+    }
+    .task {
+      await viewModel.fetchItemList()
+    }
   }
 }
 
-private struct MarketHomeListCell: View {
+private struct MarketHomeListRow: View {
 
   struct ViewState {
     var thumbnailURLString: String
@@ -26,7 +45,7 @@ private struct MarketHomeListCell: View {
     var price: String
   }
 
-  @State private var thumbnailImage: Image?
+  @State private var thumbnail: Image?
   private let viewModel: MarketHomeViewModel
   private let viewState: ViewState
 
@@ -40,40 +59,59 @@ private struct MarketHomeListCell: View {
 
   var body: some View {
     HStack(spacing: 15) {
-      if let thumbnailImage {
-        thumbnailImage
-          .resizable()
-          .aspectRatio(contentMode: .fit)
-      } else {
-        Image(systemName: "questionmark")
-          .resizable()
-          .aspectRatio(contentMode: .fit)
-      }
+      AsyncImage(
+        url: URL(string: viewState.thumbnailURLString),
+        content: { image in
+          image
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 100, height: 100)
+        },
+        placeholder: {
+          ProgressView()
+            .frame(width: 100, height: 100)
+        }
+      )
 
-      VStack(spacing: 10) {
+      VStack(alignment: .leading, spacing: 10) {
         Text(viewState.itemName)
+          .font(.headline)
 
         HStack(spacing: 8) {
           Text(viewState.price)
-          Text(viewState.registeredDate)
         }
       }
     }
     .task {
       guard let imageData = await viewModel.fetchThumbnailImage(for: viewState.thumbnailURLString),
             let uiImage = UIImage(data: imageData) else { return }
-      thumbnailImage = Image(uiImage: uiImage)
+      thumbnail = Image(uiImage: uiImage)
+    }
+  }
+
+  @ViewBuilder
+  private func thumbnailImage() -> some View {
+    if let thumbnail {
+      thumbnail
+        .resizable()
+        .aspectRatio(contentMode: .fit)
+        .frame(width: 100, height: 100)
+    } else {
+      Image(systemName: "questionmark")
+        .resizable()
+        .aspectRatio(contentMode: .fit)
+        .frame(width: 100, height: 100)
     }
   }
 }
 
 extension MarketItem {
-  private func toViewState() -> MarketHomeListCell.ViewState {
-    return MarketHomeListCell.ViewState(
+  fileprivate func toViewState() -> MarketHomeListRow.ViewState {
+    return MarketHomeListRow.ViewState(
       thumbnailURLString: thumbnail,
       itemName: name,
       registeredDate: "\(createdDate ?? Date())",
-      price: "\(currency) \(price.value.formatted(.number))"
+      price: "\(currency.rawValue.uppercased()) \(price.value.formatted(.number))"
     )
   }
 }
