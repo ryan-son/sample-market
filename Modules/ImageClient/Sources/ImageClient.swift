@@ -1,4 +1,5 @@
 import APIClient
+import ImageCacheStorage
 import Foundation
 
 public protocol ImageClient {
@@ -8,21 +9,30 @@ public protocol ImageClient {
 public final class ImageClientLive: ImageClient {
 
   enum Error: Swift.Error {
-    case invalidURLString(String)
+    case invalidURL(String)
   }
 
   private let apiClient: APIClient
+  private let cacheStorage: ImageCacheStorage
 
   public init(
-    apiClient: APIClient = APIClientLive()
+    apiClient: APIClient,
+    cacheStorage: ImageCacheStorage
   ) {
     self.apiClient = apiClient
+    self.cacheStorage = cacheStorage
   }
 
   public func image(urlString: String) async throws -> Data {
-    guard let url = URL(string: urlString) else {
-      throw Error.invalidURLString(urlString)
+    if let cached = cacheStorage.retrieve(for: urlString) {
+      return cached
+    } else {
+      guard let url = URL(string: urlString) else {
+        throw Error.invalidURL(urlString)
+      }
+      let imageData = try await apiClient.request(url: url).data
+      cacheStorage.store(imageData, for: urlString)
+      return imageData
     }
-    return try await apiClient.request(url: url).data
   }
 }
