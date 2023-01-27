@@ -1,4 +1,5 @@
 import Foundation
+import ImageClient
 import MarketClient
 import SharedModels
 
@@ -9,17 +10,20 @@ public final class MarketHomeViewModel: ObservableObject {
   }
 
   private let marketClient: MarketClient
+  private let imageClient: ImageClient
   @Published private var marketItems: [MarketItem]
   @Published private var error: Error?
 
   private var currentPageNumber: Int
 
   public init(
-    marketClient: MarketClient = MarketClientLive(),
+    marketClient: MarketClient,
+    imageClient: ImageClient,
     marketItems: [MarketItem] = [],
     currentPageNumber: Int = 0
   ) {
     self.marketClient = marketClient
+    self.imageClient = imageClient
     self.marketItems = marketItems
     self.currentPageNumber = currentPageNumber
   }
@@ -42,10 +46,24 @@ public final class MarketHomeViewModel: ObservableObject {
       return fetchedItemList
     } catch {
       self.error = .underlying(error)
-      #if DEBUG
-      print(error)
-      #endif
+      printIfDebug(error)
       return nil
     }
   }
+
+  public func fetchThumbnailImage(for urlString: String) async -> Data? {
+    do {
+      return try imageClient.image(urlString: urlString)
+    } catch {
+      self.error = .underlying(error)
+      printIfDebug(error)
+      return nil
+    }
+  }
+}
+
+private func printIfDebug(_ items: Any...) {
+  #if DEBUG
+  print(items)
+  #endif
 }
