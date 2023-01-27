@@ -24,24 +24,24 @@ public final class LRUMemoryCache: LRUCache {
     self.maxSize = maxSize
   }
 
-  func store(_ data: Data, for key: String) {
+  public func store(_ data: Data, for key: String) {
     let nsData = data as NSData
     cache.setObject(nsData, forKey: key as NSString, cost: nsData.length)
   }
 
-  func retrieve(for key: String) -> Data? {
+  public func retrieve(for key: String) -> Data? {
     return cache.object(forKey: key as NSString) as Data?
   }
 
-  func remove(for key: String) {
+  public func remove(for key: String) {
     cache.removeObject(forKey: key as NSString)
   }
 
-  func removeLeastRecentlyUsed() {
+  public func removeLeastRecentlyUsed() {
     // NSCache 기본 정책이 LRU임
   }
 
-  func removeAll() {
+  public func removeAll() {
     cache.removeAllObjects()
   }
 }
