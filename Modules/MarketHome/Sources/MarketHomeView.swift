@@ -23,7 +23,6 @@ public struct MarketHomeView: View {
               }
             }
           }
-
       }
       if viewModel.isLoading {
         ProgressView()
