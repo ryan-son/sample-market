@@ -29,8 +29,8 @@ public final class MarketHomeViewModel: ObservableObject {
     self.currentPageNumber = currentPageNumber
   }
 
-  @discardableResult
   @MainActor
+  @discardableResult
   public func fetchItemList(
     pageNumber: Int? = nil,
     itemsPerPage: Int = 10,
@@ -46,9 +46,9 @@ public final class MarketHomeViewModel: ObservableObject {
 
     do {
       let fetchedItemList = try await marketClient.itemList(request: request)
-      isLoading = false
       currentPageNumber = fetchedItemList.pageNumber
       marketItems += fetchedItemList.items
+      isLoading = false
       return fetchedItemList
     } catch {
       self.error = .underlying(error)

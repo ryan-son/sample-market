@@ -27,7 +27,6 @@ struct SampleMarketApp: App {
     let imageClient = ImageClientLive(apiClient: apiClient, cacheStorage: imageCacheStorage)
     let marketClient = MarketClientLive(apiClient: apiClient)
     let marketHomeViewModel = MarketHomeViewModel(marketClient: marketClient, imageClient: imageClient)
-
     return MarketHomeView(viewModel: marketHomeViewModel)
   }
 }
