@@ -87,21 +87,6 @@ private struct MarketHomeListRow: View {
       thumbnail = Image(uiImage: uiImage)
     }
   }
-
-  @ViewBuilder
-  private func thumbnailImage() -> some View {
-    if let thumbnail {
-      thumbnail
-        .resizable()
-        .aspectRatio(contentMode: .fit)
-        .frame(width: 100, height: 100)
-    } else {
-      Image(systemName: "questionmark")
-        .resizable()
-        .aspectRatio(contentMode: .fit)
-        .frame(width: 100, height: 100)
-    }
-  }
 }
 
 extension MarketItem {
