@@ -1,5 +1,26 @@
 # Sample Market
 
+OOP를 고려하여 기능 그룹핑 및 모듈화를 집중적으로 학습하기 위한 프로젝트
+
+- Xcode Version: 14.1
+- Tuist Version: 3.10.0
+
+## Getting Started
+
+1. 터미널에 아래 명령을 입력하여 Tuist를 설치합니다.
+```bash
+curl -Ls https://install.tuist.io | bash
+```
+2. 레포지토리를 클론 받습니다.
+```bash
+git clone https://github.com/ryan-son/sample-market.git
+```
+3. Tuist 명령을 통해 프로젝트와 워크스페이스를 생성합니다.
+```bash
+tuist generate
+# 현재는 외부 의존성이 없으므로 의존성을 가져오는 `tuist fetch` 명령을 하지 않아도 됨.
+```
+4. 빌드하고 실행합니다.
 
 ## Modules
 
