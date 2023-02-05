@@ -22,7 +22,7 @@ tuist generate
 ```
 4. 빌드하고 실행합니다.
 
-## Modules
+## 모듈
 
 | 모듈 | 역할 | 메인 타겟 타입 |
 | --- | --- | --- |
@@ -38,6 +38,10 @@ tuist generate
 | `SMDesignSystem` | 뷰를 담당하는 복수의 모듈에서 공용으로 사용할 수 있는 디자인 시스템을 구현한 모듈. 색상, 이미지와 같은 리소스가 추가되면 SwiftGen 템플릿으로 생성된 SwiftUI 코드를 자동으로 생성함 | Dynamic Framework |
 | `SMFoundation` | 복수의 모듈에서 공용으로 사용되는 기능을 모아둔 모듈. Primitive type의 확장 또는 프로토콜 기본 구현이 주로 들어감 | Dynamic Framework |
 | `SharedModels` | 복수의 모듈에서 공용으로 사용되는 도메인 모델과 DTO 타입을 모아둔 모듈 | Dynamic Framework |
+
+## 모듈 의존 관계도
+
+![image](https://user-images.githubusercontent.com/69730931/216835921-fbc0bac9-a6c3-47d6-beb8-d0180eb71b91.png)
 
 ## 구동 영상
 
